@@ -3,7 +3,7 @@ let getdata_rickandmorty = async (url) =>{
 
     if (res == null) return null
     
-    await delay(300) //Espera antes de la siguiente peticion para reducir riesgo de recibir un 429
+    await delay(500) //Espera antes de la siguiente peticion para reducir riesgo de recibir un 429
   
     if (res.ok){
         let response = await res.json()
@@ -32,7 +32,7 @@ while(url){
 
     console.log("Datos obtenidos de "+ url)
 
-    data.push(arr[0]) //guarda la info de los personajes
+    data.push(...arr[0]) //guarda la info de los personajes
     url = arr[1] //obtiene la siguiente pagina
 }
     const end = performance.now();
@@ -41,5 +41,4 @@ while(url){
     return data
 }
 
-//const url = 'https://rickandmortyapi.com/api/character';
-//main(url).catch(err => console.log(err))
+module.exports = main;
