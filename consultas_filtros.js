@@ -24,4 +24,15 @@ router.get('/20-episodios', async (req, res) => {
     res.json(resultado);
 });
 
+router.get('/primer-alien-female', async (req, res) => {
+    const personajes = await normalizar();
+
+    const resultado = personajes.find(personaje =>
+        personaje.especie === 'Alien' &&
+        personaje.genero === 'Female'
+    );
+
+    res.json(resultado);
+});
+
 module.exports = router;
