@@ -12,4 +12,12 @@ router.get('/Type-informacion', async (req, res) => {
 })  
 
 
+router.get('/Imagen-1Episodio', async (req, res) => {
+    const personajes = await normalizar();
+
+    const resultado = personajes.every(personaje => personaje.imagen !== "" && personaje.cantidadEpisodios > 0);
+
+    res.json({ resultado });
+})
+
 module.exports = router;
