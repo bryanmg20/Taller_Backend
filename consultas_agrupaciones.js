@@ -34,9 +34,40 @@ router.get('/Especie-agrupacionProm', async (req, res) => {
     
     res.json(resultado);
 
-    
+
 })
 
+
+router.get('/PersonajesXEpisodios', async (req, res) => {
+    const personajes = await normalizar();
+
+    const resultado = personajes.reduce((acumulador, personaje) => {
+
+        const episodios = personaje.cantidadEpisodios;
+
+        if (episodios >= 1 && episodios <= 5) {
+            acumulador["1-5"]++;
+        } 
+        else if (episodios >= 6 && episodios <= 15) {
+            acumulador["6-15"]++;
+        } 
+        else if (episodios >= 16 && episodios <= 30) {
+            acumulador["16-30"]++;
+        } 
+        else if (episodios > 30) {
+            acumulador["30+"]++;
+        }
+
+        return acumulador;
+   }, {
+        "1-5": 0,
+        "6-15": 0,
+        "16-30": 0,
+        "30+": 0
+    });
+
+    res.json(resultado);
+});
 
 
 
