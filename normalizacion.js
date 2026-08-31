@@ -1,4 +1,4 @@
-const main = require('./extraccion_secuencial');
+const main = require('./extraccion_promiseall');
 
 const url = 'https://rickandmortyapi.com/api/character';
 
