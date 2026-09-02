@@ -3,6 +3,7 @@ const delay = async (ms) => {
 }
 
 async function getdata_rickandmorty (url){
+    const start = performance.now()
     let max_pages;
     try{
         const res = await fetch(url);
@@ -28,12 +29,15 @@ async function getdata_rickandmorty (url){
         
     }
     const characters = await fetchAllCharacters(lots)
+
+    const end = performance.now();
+    console.log(`El tiempo total de la extraccion concurrente es: ${end-start} ms`)
     return characters
 }
 
 async function fetchAllCharacters (lots){
     const characters = []
-    const ms = 1500
+    const ms = 2000
 
     for(let urls of lots){
 
@@ -41,7 +45,7 @@ async function fetchAllCharacters (lots){
         const respuestas = await Promise.all(promesas);  //espera que esten todas resueltas
 
         const datos = await Promise.all( //espera que tengamos todos los json
-        respuestas.map((r) =>r.json().catch(err=>console.log(err))) 
+        respuestas.map((r) =>r.json()) 
         ); 
 
      
