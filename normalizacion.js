@@ -2,11 +2,19 @@ const main = require('./extraccion_promiseall');
 
 const url = 'https://rickandmortyapi.com/api/character';
 
+let datosNormalizados = null;
+
 async function normalizar() {
+    
+    if (datosNormalizados !== null) {
+        console.log("Utilizando datos normalizados en caché");
+        return datosNormalizados;
+    }
+
     try {
         const datos = await main(url);
 
-        const datosNormalizados = datos.map(personaje => {
+        datosNormalizados = datos.map(personaje => {
             return {
                 id: personaje.id,
                 nombre: personaje.name,
@@ -24,7 +32,7 @@ async function normalizar() {
         return datosNormalizados;
         //console.log(datosNormalizados);
     } catch (error) {
-        console.log(error);
+        console.log('Error al normalizar:', error);
     }
 }
 
