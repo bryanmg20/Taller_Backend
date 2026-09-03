@@ -1,11 +1,14 @@
 const express = require('express');
 const normalizar = require('./normalizacion');
 
+// Router para manejar los endpoints
 const router = express.Router();
 
 router.get('/Especie-agrupacionProm', async (req, res) => {
     const personajes = await normalizar();
 
+    // Agrupa cantidad de personajes, promedio de episodios y perosnajes vivos
+    // Usando la especie como clave
     const resultado = personajes.reduce((acumulador, personaje) => {
         const especie = personaje.especie;
         if (!acumulador[especie]) {
@@ -18,6 +21,7 @@ router.get('/Especie-agrupacionProm', async (req, res) => {
 
         const grupo = acumulador[especie];
 
+        // Calculo incremental del promedio de episodios
         grupo.promedioEpisodios =
             (grupo.promedioEpisodios * grupo.cantidad + personaje.cantidadEpisodios)
             / (grupo.cantidad + 1);
@@ -41,6 +45,7 @@ router.get('/Especie-agrupacionProm', async (req, res) => {
 router.get('/PersonajesXEpisodios', async (req, res) => {
     const personajes = await normalizar();
 
+    // Clasifica y cuenta los personajes dentro de rangos fijos de episodios
     const resultado = personajes.reduce((acumulador, personaje) => {
 
         const episodios = personaje.cantidadEpisodios;
